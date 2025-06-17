@@ -1,16 +1,23 @@
+server:
+  port: 8084
+
+# This will be the single source for configuration structure
 spring:
+  # Datasource configuration with placeholders and local defaults
   datasource:
-    url: jdbc:mysql://localhost:3306/taskdb
-    username: root
-    password: 9090
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/taskdb}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:9090}
     driver-class-name: com.mysql.cj.jdbc.Driver
-  
+
+  # Kafka configuration with a placeholder and local default
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-  
+
+  # JPA Configuration
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -19,12 +26,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
         jdbc:
           batch_size: 50
         order_inserts: true
         order_updates: true
 
+  # Jackson (JSON) Configuration
   jackson:
     serialization:
       write-dates-as-timestamps: false
@@ -33,5 +40,17 @@ spring:
     default-property-inclusion: non_null
     property-naming-strategy: SNAKE_CASE
 
-server:
-  port: 8084
+# Custom properties
+frontend:
+  url: ${FRONTEND_URL:http://localhost:4200}
+
+# CORS configuration
+cors:
+  allowed:
+    origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200,http://localhost:3000}
+
+# Eureka configuration (if using service discovery)
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE:http://localhost:8761/eureka/}
