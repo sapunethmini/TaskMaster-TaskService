@@ -1,0 +1,9 @@
+{
+    "serviceRegistries": [
+       {
+          "registryArn": "arn:aws:servicediscovery:ap-southeast-1:519139471623:namespace/ns-tlnxorhobdn75oq3",
+          "containerName": "TaskServiceContainerName",
+          "containerPort": 8080
+       }
+    ]
+}
